@@ -66,7 +66,7 @@ if (isset($_POST['order_customize'])) {
         $sqx="SELECT * FROM measurements WHERE USER_ID='$user_id' AND DRESS_ID='$dress_id' AND SHOULDER='$shoulder' AND BUST='$bust' AND WAIST='$waist' AND HIP='$hips'";
     }else if($dress_id=='none' && $fabric_id!='none'){
         echo "2nd";
-        echo $dress_id;
+        echo $fabric_id;
         $sql = "INSERT INTO measurements(USER_ID, FABRIC_ID, SHOULDER, BUST, WAIST, HIP) 
                 VALUES ('$user_id', '$fabric_id', '$shoulder', '$bust', '$waist', '$hips')";
 
@@ -228,7 +228,7 @@ if (isset($_POST['order_customize'])) {
     <div class="container">
         <!-- customer details  -->
         <h2>Customer details</h2>
-        <form id="customization-form" method="POST" action="">
+        <form method="POST" action="">
         <div class="form-group">
             <?php
 
@@ -259,7 +259,7 @@ if (isset($_POST['order_customize'])) {
 
         <!-- order details  -->
         <h2>Order details</h2>
-        <!-- <form id="customization-form" method="POST" action=""> -->
+
             <!-- select dress  -->
             <div class="form-group">
                 <?php
@@ -276,8 +276,9 @@ if (isset($_POST['order_customize'])) {
                             $row=mysqli_fetch_array($dress);
                             echo"   <option value='".$row['DRESS_ID']."' data-price='".$row['BASE_PRICE']."'>".$row['NAME']." - ₹".$row['BASE_PRICE']."</option>";
                         }
+                        echo "</select>";
                     }
-                    echo "</select>";
+                    
                     
                 ?>
             </div>
@@ -293,14 +294,15 @@ if (isset($_POST['order_customize'])) {
 
                         echo "<label for='fabric'>Choose Fabric(Per meter):</label>
                             <select id='fabric' name='fabric' onchange='updatePrice()'>
-                            <option value='none' data-price='0'>None</option>
-                            <option value='custom' data-price='0'>Custom</option>";
+                            <option value='none' data-price='0'>None</option>";
+                          
                         for($i=0;$i<$count;$i++){
                             $row=mysqli_fetch_array($fabrics);
                             echo"   <option value='".$row['FABRIC_ID']."' data-price='".$row['PRICE_PER_UNIT']."'>".$row['NAME']." - ₹".$row['PRICE_PER_UNIT']."</option>";
                         }
+                        echo "</select>";
                     }
-                    echo "</select>";
+                    
                     
                 ?>
 
