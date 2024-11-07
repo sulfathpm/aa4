@@ -12,13 +12,14 @@ if ($conn->connect_error) {
 }
 
 // Fetch delivery records excluding those with status 'cart' and order by ORDER_ID descending
-$sql = "SELECT orders.ORDER_ID, orders.USER_ID, orders.DRESS_ID, dress.NAME, orders.SSIZE,
-        orders.STATUSES, orders.QUANTITY, orders.TOTAL_PRICE, orders.CREATED_AT, 
-        orders.ESTIMATED_DELIVERY_DATE, orders.ACTUAL_DELIVERY_DATE 
-        FROM orders 
-        JOIN dress ON orders.DRESS_ID = dress.DRESS_ID
-        WHERE orders.STATUSES != 'CART' 
-        ORDER BY orders.ORDER_ID DESC";  // Order by ORDER_ID descending
+// $sql = "SELECT orders.ORDER_ID, orders.USER_ID, orders.DRESS_ID, dress.NAME, orders.SSIZE,
+//         orders.STATUSES, orders.QUANTITY, orders.TOTAL_PRICE, orders.CREATED_AT, 
+//         orders.ESTIMATED_DELIVERY_DATE, orders.ACTUAL_DELIVERY_DATE 
+//         FROM orders 
+//         JOIN dress ON orders.DRESS_ID = dress.DRESS_ID
+//         WHERE orders.STATUSES != 'CART' 
+//         ORDER BY orders.ORDER_ID DESC";  // Order by ORDER_ID descending
+$sql="SELECT * FROM orders WHERE STATUSES != 'CART' ORDER BY ORDER_ID DESC";
 $result = $conn->query($sql);
 ?>
 
@@ -79,8 +80,24 @@ $result = $conn->query($sql);
                                 <tr>
                                     <td><?php echo $row['ORDER_ID']; ?></td>
                                     <td><?php echo $row['USER_ID']; ?></td>
-                                    <td><?php echo $row['DRESS_ID']; ?></td>
-                                    <td><?php echo $row['NAME']; ?></td>
+
+                                    <td><?php 
+                                    
+                                    if($row['DRESS_ID']==null){
+                                        echo "N/A";
+                                    }else{
+                                        echo $row['DRESS_ID']; 
+                                    }
+                                    ?></td>
+                                    
+
+                                    <td><?php 
+                                    if($row['DRESS_ID']==null){
+                                        echo "N/A";
+                                    }else{
+                                        echo $row['NAME']; 
+                                    }
+                                    ?></td>
                                     <td><?php echo $row['SSIZE']; ?></td>
                                     <td><?php echo $row['STATUSES']; ?></td>
                                     <td><?php echo $row['QUANTITY']; ?></td>
